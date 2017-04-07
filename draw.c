@@ -107,7 +107,7 @@ void	floorcast(t_info *i)
 void	draw(t_info *i, int x)
 {
 	int		d;
-//	int		r, g , b;
+	int		r, g , b;
 	Uint32		pixel;
 	int			y;
 
@@ -121,7 +121,11 @@ void	draw(t_info *i, int x)
 		d = y * 256 - HEIGHT * 128 + i->lineh * 128;
 		i->tex.y = ((d * TEXH) / i->lineh )/ 256;
 		pixel = getpixel(i->textures[i->texnum], i->tex.x, i->tex.y);
-		i->pixels[y * WIDTH + x] = pixel;
+		uinttorgb(&r, &g, &b, pixel);
+		if (!i->side)
+			i->pixels[y * WIDTH + x] = rgbtouint(r, g, b);
+		else
+			i->pixels[y * WIDTH + x] = rgbtouint(r / 2, g / 2, b / 2);
 		y++;
 	}
 }
