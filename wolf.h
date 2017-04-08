@@ -39,7 +39,7 @@ typedef struct		s_info
 	SDL_Renderer*	ren;
 	SDL_Event		event;
 	SDL_Texture		*img;
-	SDL_Surface		*textures[8];
+	SDL_Surface		*textures[9];
 	t_coord			pos;
 	t_coord			dir;
 	t_coord			plane;
@@ -48,6 +48,7 @@ typedef struct		s_info
 	t_coord			sidedist;
 	t_coord			deltadist;
 	t_coord			floorwall;
+	t_coord			currentfloor;
 	double			distwall;
 	double			weight;
 	double			currentdist;
@@ -61,6 +62,7 @@ typedef struct		s_info
 	t_int			step;
 	t_int			mappos;
 	t_int			tex;
+	t_int			floortex;
 	int				running;
 	int				hit;
 	int				side;

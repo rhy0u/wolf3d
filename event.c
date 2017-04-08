@@ -22,34 +22,32 @@ void	readkeys(t_info *i)
 	oldplane.y = i->plane.y;
 	if (i->event.key.keysym.sym == SDLK_w || i->event.key.keysym.sym == SDLK_UP)
 	{
-		if (!i->map[(int)(i->pos.y + i->movespeed * i->dir.y)][(int)(i->pos.x + i->movespeed * i->dir.x)] - '0')
-		{
+		if (i->map[(int)(i->pos.y)][(int)(i->pos.x + i->movespeed * i->dir.x)] <= '0')
 			i->pos.x += i->movespeed * i->dir.x;
+		if (i->map[(int)(i->pos.y + i->movespeed * i->dir.y)][(int)(i->pos.x)] <= '0')
 			i->pos.y += i->movespeed * i->dir.y;
-		}
 	}
-	if (i->event.key.keysym.sym == SDLK_s || i->event.key.keysym.sym == SDLK_DOWN)
+	else if (i->event.key.keysym.sym == SDLK_s || i->event.key.keysym.sym == SDLK_DOWN)
 	{
-		if (!i->map[(int)(i->pos.y - i->movespeed * i->dir.y)][(int)(i->pos.x - i->movespeed * i->dir.x)] - '0')
-		{
+		if (i->map[(int)(i->pos.y)][(int)(i->pos.x - i->movespeed * i->dir.x)] <= '0')
 			i->pos.x -= i->movespeed * i->dir.x;
+		if (i->map[(int)(i->pos.y - i->movespeed * i->dir.y)][(int)(i->pos.x)] <= '0')
 			i->pos.y -= i->movespeed * i->dir.y;
-		}
 	}
-	if (i->event.key.keysym.sym == SDLK_a || i->event.key.keysym.sym == SDLK_LEFT)
+	else if (i->event.key.keysym.sym == SDLK_a || i->event.key.keysym.sym == SDLK_LEFT)
 	{
 		i->dir.x = olddir.x * cos(i->rotspeed) - olddir.y * sin(i->rotspeed);
 		i->dir.y = olddir.x * sin(i->rotspeed) + olddir.y * cos(i->rotspeed);
 		i->plane.x = oldplane.x * cos(i->rotspeed) - oldplane.y * sin(i->rotspeed);
 		i->plane.y = oldplane.x * sin(i->rotspeed) + oldplane.y * cos(i->rotspeed);
 	}
-	if (i->event.key.keysym.sym == SDLK_d || i->event.key.keysym.sym == SDLK_RIGHT)
+	else if (i->event.key.keysym.sym == SDLK_d || i->event.key.keysym.sym == SDLK_RIGHT)
 	{
 		i->dir.x = olddir.x * cos(-i->rotspeed) - olddir.y * sin(-i->rotspeed);
 		i->dir.y = olddir.x * sin(-i->rotspeed) + olddir.y * cos(-i->rotspeed);
 		i->plane.x = oldplane.x * cos(-i->rotspeed) - oldplane.y * sin(-i->rotspeed);
 		i->plane.y = oldplane.x * sin(-i->rotspeed) + oldplane.y * cos(-i->rotspeed);
 	}
-	if (i->event.key.keysym.sym ==	SDLK_ESCAPE)
+	else if (i->event.key.keysym.sym ==	SDLK_ESCAPE)
 		i->running = 0;
 }

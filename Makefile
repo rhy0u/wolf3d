@@ -30,7 +30,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C libft
-	gcc -o $(NAME) $(OBJ) -framework SDL2 $(INCLUDE) -L./libft -lft
+	gcc -o $(NAME) $(OBJ) -I/Library/Frameworks/SDL2.framework/Headers -framework SDL2 $(INCLUDE) -L./libft -lft
 
 %.o:%.c
 	gcc -o $@ $(FLAGO) -c $<

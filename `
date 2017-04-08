@@ -48,25 +48,25 @@ Uint32 getpixel(SDL_Surface *surface, int x, int y)
 
 void	floorcast(t_info *i)
 {
-	if (i->side == 0 && i->raydir.x > 0)
+	if ((!i->side) && (i->raypos.x > 0))
 	{
 		i->floorwall.x = i->mappos.x;
 		i->floorwall.y = i->mappos.y + i->wallx;
 	}
-	else if (i->side == 0 && i->raydir.x < 0)
+	if ((!i->side) && (i->raypos.x < 0))
 	{
 		i->floorwall.x = i->mappos.x + 1;
 		i->floorwall.y = i->mappos.y + i->wallx;
 	}
-	else if (i->side == 1 && i->raydir.y > 0)
+	if ((i->side) && (i->raypos.y > 0))
 	{
-		i->floorwall.x = i->mappos.x + i->wallx;
 		i->floorwall.y = i->mappos.y;
+		i->floorwall.x = i->mappos.x + i->wallx;
 	}
 	else
 	{
-		i->floorwall.x = i->mappos.x + i->wallx;
 		i->floorwall.y = i->mappos.y + 1;
+		i->floorwall.x = i->mappos.x + i->wallx;
 	}
 	i->distwall = i->perpwalldist;
 	i->distplayer = 0.0;
@@ -78,23 +78,21 @@ void	drawfloorsky(t_info *i, int x)
 	int		r, g , b;
 	Uint32		pixel;
 
-	floorcast(i);
 	y = i->drawe + 1;
 	while (y < HEIGHT)
 	{
-		i->currentdist = (double)(HEIGHT / ( 2.0 * y - HEIGHT));
+		i->currentdist = (double)(HEIGHT / ( 2 * y - HEIGHT));
 		i->weight = (i->currentdist - i->distplayer)
 			/ (i->distwall - i->distplayer);
 		i->currentfloor.x = i->weight * i->floorwall.x
 			+ (1.0 - i->weight) * i->pos.x;
 		i->currentfloor.y = i->weight * i->floorwall.y
 			+ (1.0 - i->weight) * i->pos.y;
-		i->floortex.x = (int)(i->currentfloor.x * 32) % 32;
-		i->floortex.y = (int)(i->currentfloor.y * 32) % 32;
-		//printf("[%d, %d]\n", i->floortex.y, i->floortex.x);
-		pixel = getpixel(i->textures[8], i->floortex.y, i->floortex.x);
+		i->floortex.x = (int)(i->currentfloor.x * TEXW) % TEXW;
+		i->floortex.y = (int)(i->currentfloor.y * TEXH) % TEXH;
+		printf("[%f, %f]\n", i->floortex.y, i->floortex.x);
+		pixel = getpixel(i->textures[2], i->floortex.x, i->floortex.y);
 		uinttorgb(&r, &g, &b, pixel);
-	//printf("lol\n");
 		i->pixels[y * WIDTH + x] = rgbtouint(r / 2, g / 2, b / 2);
 		i->pixels[(HEIGHT - y) * WIDTH + x] = rgbtouint(r, g, b);
 		y++;

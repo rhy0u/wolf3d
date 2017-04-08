@@ -47,11 +47,11 @@ void		mainloop(t_info *i)
 		i->time_old = i->time;
 		i->time = SDL_GetTicks();
 		i->frametime = (double)(i->time - i->time_old) / 1000;
-		printf("%.2f\n", 1 / i->frametime);
+		if (16 - i->frametime * 1000 > 0)
+			SDL_Delay(16 - i->frametime * 1000);
 		wolf(i);
 		i->movespeed = i->frametime * 10;
 		i->rotspeed = i->frametime * 3.5;
-		SDL_Delay(10);
 		SDL_RenderClear(i->ren);
 		SDL_RenderCopy(i->ren, i->img, NULL, NULL);
 		SDL_RenderPresent(i->ren);
@@ -64,6 +64,7 @@ int		main(void)
 
 	if (!(i.pixels = (Uint32 *)malloc(sizeof(Uint32) * HEIGHT * WIDTH)))
 		return (0);
+	ft_bzero(i.pixels, WIDTH * HEIGHT * sizeof(Uint32));
 	if (SDL_Init(SDL_INIT_VIDEO) == -1)
 		return (0);
 	init(&i);
@@ -72,7 +73,6 @@ int		main(void)
 	i.ren = SDL_CreateRenderer(i.win, -1, 0);
 	i.img = SDL_CreateTexture(i.ren, SDL_PIXELFORMAT_ARGB8888,
 			SDL_TEXTUREACCESS_STREAMING, WIDTH, HEIGHT);
-	ft_bzero(i.pixels, WIDTH * HEIGHT * sizeof(Uint32));
 	mainloop(&i);
 	free(i.pixels);
 	SDL_DestroyTexture(i.img);

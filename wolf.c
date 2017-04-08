@@ -80,8 +80,7 @@ void	wolf(t_info *i)
 	int		x;
 	x = 0;
 
-	drawsky(i);
-	drawfloor(i);
+	ft_bzero(i->pixels, WIDTH * HEIGHT * sizeof(Uint32));
 	while (x < WIDTH)
 	{
 		initview(i ,x);
@@ -111,9 +110,7 @@ void	wolf(t_info *i)
 			i->tex.x = TEXW - i->tex.x - 1;
 		if (i->side == 0 && i->raydir.x > 0)
 			i->tex.x = TEXW - i->tex.x - 1;
-		//floorcast(i);
 		draw(i, x);
 		x++;
 	}
 }
-
