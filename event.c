@@ -48,6 +48,12 @@ void	readkeys(t_info *i)
 		i->plane.x = oldplane.x * cos(-i->rotspeed) - oldplane.y * sin(-i->rotspeed);
 		i->plane.y = oldplane.x * sin(-i->rotspeed) + oldplane.y * cos(-i->rotspeed);
 	}
+	else if (i->event.key.keysym.sym == SDLK_f)
+		SDL_SetWindowFullscreen(i->win, SDL_WINDOW_FULLSCREEN);
+	else if (i->event.key.keysym.sym == SDLK_g)
+		SDL_SetWindowFullscreen(i->win, SDL_WINDOW_FULLSCREEN_DESKTOP);
+	else if (i->event.key.keysym.sym == SDLK_h)
+		SDL_SetWindowFullscreen(i->win, 0);
 	else if (i->event.key.keysym.sym ==	SDLK_ESCAPE)
 		i->running = 0;
 }

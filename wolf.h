@@ -70,6 +70,7 @@ typedef struct		s_info
 	int				draws;
 	int				drawe;
 	int				texnum;
+	int				fs;
 	Uint32			*pixels;
 	Uint32			time;
 	Uint32			time_old;

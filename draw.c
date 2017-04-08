@@ -28,7 +28,7 @@ Uint32 getpixel(SDL_Surface *surface, int x, int y)
 {
 	int bpp = surface->format->BytesPerPixel;
 	
-	Uint8 *p = (Uint8 *)surface->pixels + x * surface->pitch + y * bpp;
+	Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
 	if (bpp == 1)
 		return *p;
 	else if (bpp == 2)
@@ -91,10 +91,8 @@ void	drawfloorsky(t_info *i, int x)
 			+ (1.0 - i->weight) * i->pos.y;
 		i->floortex.x = (int)(i->currentfloor.x * 32) % 32;
 		i->floortex.y = (int)(i->currentfloor.y * 32) % 32;
-		//printf("[%d, %d]\n", i->floortex.y, i->floortex.x);
 		pixel = getpixel(i->textures[8], i->floortex.y, i->floortex.x);
 		uinttorgb(&r, &g, &b, pixel);
-	//printf("lol\n");
 		i->pixels[y * WIDTH + x] = rgbtouint(r / 2, g / 2, b / 2);
 		i->pixels[(HEIGHT - y) * WIDTH + x] = rgbtouint(r, g, b);
 		y++;

@@ -26,6 +26,7 @@ int		init(t_info *i)
 	i->running = 1;
 	i->time = 0;
 	i->time_old = 0;
+	i->fs = 0;
 	getmap(i);
 	inittex(i);
 	SDL_SetRenderDrawColor(i->ren, 0, 0, 0, 255);
@@ -47,10 +48,11 @@ void		mainloop(t_info *i)
 		i->time_old = i->time;
 		i->time = SDL_GetTicks();
 		i->frametime = (double)(i->time - i->time_old) / 1000;
+		printf("%d\n", (int)(1 / i->frametime));
 		if (16 - i->frametime * 1000 > 0)
 			SDL_Delay(16 - i->frametime * 1000);
 		wolf(i);
-		i->movespeed = i->frametime * 10;
+		i->movespeed = i->frametime * 5;
 		i->rotspeed = i->frametime * 3.5;
 		SDL_RenderClear(i->ren);
 		SDL_RenderCopy(i->ren, i->img, NULL, NULL);
